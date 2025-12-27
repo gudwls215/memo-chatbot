@@ -108,3 +108,17 @@ Bot: 메모를 삭제했습니다. (ID: 1)
 3. `get_memo`: 특정 메모 조회
 4. `update_memo`: 메모 수정
 5. `delete_memo`: 메모 삭제
+
+## MCP 서버 연동 방법
+
+클로드 데스크탑 사용시 `claude_desktop_config.json` 파일에 설정
+```
+{
+  "mcpServers": {
+    "memo-manager": {
+      "command": "python",
+      "args": ["your-path/memo-chatbot/mcp-server/server.py"]
+    }
+  }
+}
+```

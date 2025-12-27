@@ -1,12 +1,16 @@
 """MCP 서버 - 메모 관리 도구를 제공하는 MCP 서버"""
 import asyncio
+import sys
+import os
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp.types import Tool, TextContent
 from pydantic import AnyUrl
 import json
 
-from . import tools
+# 현재 디렉토리를 Python 경로에 추가
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import tools
 
 
 # MCP 서버 인스턴스 생성

@@ -4,7 +4,7 @@ LangGraph와 MCP(Model Context Protocol)를 활용한 자연어 메모 관리 �
 
 ## 프로젝트 개요
 
-이 프로젝트는 자연어로 메모를 관리할 수 있는 AI 챗봇입니다. LangGraph를 사용한 대화형 워크플로우와 MCP 프로토콜을 통해 FastAPI 백엔드(https://github.com/gudwls215/flab-python-backend)와 연동됩니다.
+이 프로젝트는 자연어로 메모를 관리할 수 있는 AI 챗봇입니다. LangGraph를 사용한 대화형 워크플로우와 MCP 프로토콜을 통해 FastAPI 백엔드(https://github.com/gudwls215/flab-python-backend) 와 연동됩니다.
 
 ## 주요 기능
 

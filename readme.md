@@ -44,10 +44,19 @@ memo-chatbot/
 - FastAPI 메모장 백엔드 실행 중 (http://localhost:8000)
 - OpenAI API 키
 
-### 2. 의존성 설치
+### 3. 가상환경 생성 및 의존성 설치
 
 ```bash
-pip install -r requirements.txt
+# uv를 사용하여 가상환경 생성 및 의존성 설치
+uv venv
+uv pip install -r requirements.txt
+
+# 가상환경 활성화
+# Windows
+.venv\Scripts\activate
+
+# Linux/Mac
+source .venv/bin/activate
 ```
 
 ### 3. 환경 변수 설정
@@ -95,6 +104,7 @@ Bot: 메모를 삭제했습니다. (ID: 1)
 - **LangGraph**: 대화형 워크플로우 관리
 - **LangChain**: LLM 통합 및 도구 관리
 - **OpenAI GPT-5-nano**: 자연어 이해 및 생성
+- **FastMCP**: 간단하고 빠른 MCP 서버 구현
 - **MCP (Model Context Protocol)**: 도구 프로토콜
 - **FastAPI**: 백엔드 REST API
 - **PostgreSQL**: 데이터베이스

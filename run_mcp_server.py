@@ -55,9 +55,8 @@ def main():
     else:
         print("stdio 모드로 MCP 서버 시작...")
         print("(클라이언트가 이 서버에 연결하기를 기다립니다)")
-        import asyncio
-        from server import main as stdio_main
-        asyncio.run(stdio_main())
+        from server import mcp
+        mcp.run()
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 ## 개요
 
-이 프로젝트는 MCP (Model Context Protocol) 서버와 클라이언트를 독립적으로 실행할 수 있습니다.
+이 프로젝트는 FastMCP를 사용하여 MCP (Model Context Protocol) 서버와 클라이언트를 독립적으로 실행할 수 있습니다. FastMCP는 데코레이터 기반의 간단한 API를 제공하여 MCP 서버를 쉽게 구현할 수 있게 해줍니다.
 
 ## 실행 모드
 

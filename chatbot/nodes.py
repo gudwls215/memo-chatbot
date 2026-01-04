@@ -1,6 +1,7 @@
 """LangGraph 챗봇 노드 구현 - MCPToolkit 사용"""
 import os
 import sys
+import json
 import asyncio
 from typing import Literal
 from contextlib import AsyncExitStack
@@ -146,9 +147,45 @@ async def call_tools(state):
             try:
                 # MCP를 통해 도구 실행
                 result = await selected_tool.ainvoke(tool_args)
+
+                print(f"Raw tool result type: {type(result)}")
+                
+                # FastMCP 응답 형식 처리
+                content = result
+                
+                # 문자열로 반환된 경우 JSON 파싱 시도
+                if isinstance(result, str):
+                    try:
+                        result = json.loads(result)
+                        print(f"Parsed string to: {type(result)}")
+                    except json.JSONDecodeError:
+                        print("Result is a plain string, not JSON")
+                        # 일반 문자열이면 그대로 사용
+                        content = result
+                
+                # 리스트인지 확인 (FastMCP 형식: [{"type":"text","text":"..."}])
+                if isinstance(result, list) and len(result) > 0:
+                    print(f"Result is a list with {len(result)} items")
+                    
+                    # 첫 번째 아이템이 딕셔너리이고 "text" 키가 있는지 확인
+                    if isinstance(result[0], dict) and "text" in result[0]:
+                        print("Found FastMCP format, extracting 'text' field...")
+                        content = result[0]["text"]
+                        
+                        # text 필드의 내용이 JSON 문자열이면 파싱하여 보기 좋게 포맷팅
+                        try:
+                            parsed = json.loads(content)
+                            content = json.dumps(parsed, ensure_ascii=False, indent=2)
+                            print("Successfully parsed and formatted JSON content")
+                        except (json.JSONDecodeError, TypeError):
+                            # JSON이 아니면 그대로 사용 (에러 메시지 등)
+                            print("Text content is not JSON, using as-is")
+                
+                print(f"Final content preview: {str(content)[:200]}...")
+                
                 tool_messages.append(
                     ToolMessage(
-                        content=str(result),
+                        content=str(content),
                         tool_call_id=tool_call["id"]
                     )
                 )
@@ -159,5 +196,6 @@ async def call_tools(state):
                         tool_call_id=tool_call["id"]
                     )
                 )
-    
+
+    #print("tool_messages : ", tool_messages)
     return {"messages": tool_messages}

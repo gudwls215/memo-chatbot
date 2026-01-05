@@ -160,7 +160,6 @@ async def call_tools(state):
                         print(f"Parsed string to: {type(result)}")
                     except json.JSONDecodeError:
                         print("Result is a plain string, not JSON")
-                        # 일반 문자열이면 그대로 사용
                         content = result
                 
                 # 리스트인지 확인 (FastMCP 형식: [{"type":"text","text":"..."}])
@@ -170,15 +169,21 @@ async def call_tools(state):
                     # 첫 번째 아이템이 딕셔너리이고 "text" 키가 있는지 확인
                     if isinstance(result[0], dict) and "text" in result[0]:
                         print("Found FastMCP format, extracting 'text' field...")
-                        content = result[0]["text"]
+                        text_content = result[0]["text"]
+                        
+                        # "Output validation error: " 프리픽스 제거
+                        if isinstance(text_content, str) and text_content.startswith("Output validation error: "):
+                            print("Found validation error prefix, extracting actual data...")
+                            text_content = text_content.replace("Output validation error: ", "", 1)
                         
                         # text 필드의 내용이 JSON 문자열이면 파싱하여 보기 좋게 포맷팅
                         try:
-                            parsed = json.loads(content)
+                            parsed = json.loads(text_content) if isinstance(text_content, str) else text_content
                             content = json.dumps(parsed, ensure_ascii=False, indent=2)
                             print("Successfully parsed and formatted JSON content")
                         except (json.JSONDecodeError, TypeError):
-                            # JSON이 아니면 그대로 사용 (에러 메시지 등)
+                            # JSON이 아니면 그대로 사용
+                            content = text_content
                             print("Text content is not JSON, using as-is")
                 
                 print(f"Final content preview: {str(content)[:200]}...")

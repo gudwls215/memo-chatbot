@@ -48,7 +48,7 @@ memo-chatbot/
 
 ```bash
 # uv를 사용하여 가상환경 생성 및 의존성 설치
-uv venv
+uv venv --python 3.10
 uv pip install -r requirements.txt
 
 # 가상환경 활성화
